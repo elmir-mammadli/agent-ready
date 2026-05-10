@@ -1,10 +1,10 @@
-export function workflowTemplate() {
+export function workflowTemplate(crons = ['0 9 * * *', '0 17 * * *']) {
+  const cronLines = crons.map(c => `    - cron: '${c}'`).join('\n')
   return `name: agent-ready
 
 on:
   schedule:
-    - cron: '0 9 * * *'
-    - cron: '0 17 * * *'
+${cronLines}
   workflow_dispatch:
 
 permissions:

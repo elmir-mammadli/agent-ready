@@ -4,6 +4,7 @@ import { selectProvider } from './steps/selectProvider.js'
 import { collectTrello } from './steps/collectTrello.js'
 import { collectAnthropic } from './steps/collectAnthropic.js'
 import { collectTelegram } from './steps/collectTelegram.js'
+import { collectSchedule } from './steps/collectSchedule.js'
 import { setGithubSecrets } from './steps/setGithubSecrets.js'
 import { scaffold } from './steps/scaffold.js'
 import { done } from './steps/done.js'
@@ -15,9 +16,10 @@ export async function init() {
     const board = await collectTrello()
     const anthropic = await collectAnthropic()
     const telegram = await collectTelegram()
+    const schedule = await collectSchedule()
     const secrets = { ...board, ...anthropic, ...telegram }
     await setGithubSecrets(secrets)
-    await scaffold()
+    await scaffold({ crons: schedule.crons })
     await done()
   } catch (err) {
     if (err.name === 'ExitPromptError') {

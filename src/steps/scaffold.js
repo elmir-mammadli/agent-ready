@@ -6,7 +6,7 @@ import { workflowTemplate } from '../templates/workflow.js'
 import { agentScriptTemplate } from '../templates/agentScript.js'
 import { doneWorkflowTemplate } from '../templates/doneWorkflow.js'
 
-export async function scaffold() {
+export async function scaffold({ crons } = {}) {
   const spinner = ora({ text: '  Generating workflow files...', indent: 2 }).start()
 
   const cwd = process.cwd()
@@ -19,7 +19,7 @@ export async function scaffold() {
 
   await fs.writeFile(
     path.join(workflowsDir, 'agent-ready.yml'),
-    workflowTemplate(),
+    workflowTemplate(crons),
   )
 
   await fs.writeFile(
