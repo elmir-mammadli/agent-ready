@@ -30,8 +30,8 @@ git add .github && git commit -m "feat: add agent-ready" && git push
 ## How it works
 
 1. Add the `agent-ready` label to a Trello card in your To Do list
-2. The agent runs at the times you chose during setup
-3. Claude reads the card title and description, finds the relevant files, and writes the code
+2. The agent runs at the times you set during setup
+3. Claude reads the card title and description, finds the relevant files, writes the code
 4. A PR is opened with a summary of the change
 5. You get a Telegram message with the PR link
 6. Merge the PR and the card moves to Done automatically
@@ -58,6 +58,8 @@ During setup you pick your timezone and up to two daily run times. The wizard co
 | Jira | Coming soon |
 | Linear | Coming soon |
 | GitHub Projects | Coming soon |
+| GitLab Issues | Coming soon |
+| Bitbucket | Coming soon |
 
 ## License
 

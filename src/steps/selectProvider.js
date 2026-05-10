@@ -12,6 +12,8 @@ export async function selectProvider() {
       { name: 'Jira (coming soon)', value: 'jira', disabled: true },
       { name: 'Linear (coming soon)', value: 'linear', disabled: true },
       { name: 'GitHub Projects (coming soon)', value: 'github-projects', disabled: true },
+      { name: 'GitLab Issues (coming soon)', value: 'gitlab', disabled: true },
+      { name: 'Bitbucket (coming soon)', value: 'bitbucket', disabled: true },
     ],
   })
 
