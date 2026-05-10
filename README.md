@@ -2,7 +2,7 @@
 
 Wire an AI coding agent into any GitHub repo in 5 minutes.
 
-Tag a Trello card **agent-ready**, and Claude reads the task, edits the code, opens a PR, and pings you on Telegram — twice a day, automatically.
+Tag a Trello card **agent-ready**, and Claude reads the task, edits the code, opens a PR, and pings you on Telegram - twice a day, automatically.
 
 ## Quick start
 
@@ -24,7 +24,7 @@ Then commit and push `.github/` and you're live.
 1. Add the `agent-ready` label to a Trello card in your **To Do** list
 2. The agent runs at **9am and 5pm** (or trigger manually in GitHub Actions)
 3. Claude reads the card title + description, identifies relevant files, writes the code
-4. A PR is opened — nothing touches `main` without your review
+4. A PR is opened - nothing touches `main` without your review
 5. You get a Telegram message with the PR link
 6. Merge the PR → card moves to **Done** automatically
 
@@ -32,7 +32,7 @@ Then commit and push `.github/` and you're live.
 
 - Node.js 18+
 - A GitHub repository
-- GitHub CLI (`gh`) for automatic secret setup (optional — can set manually)
+- GitHub CLI (`gh`) for automatic secret setup (optional - can set manually)
 - A Trello account
 - An Anthropic API key
 

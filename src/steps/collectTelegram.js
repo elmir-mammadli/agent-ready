@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { input } from '@inquirer/prompts'
 
 export async function collectTelegram() {
-  console.log(chalk.bold('  Step 3 of 3 — Telegram'))
+  console.log(chalk.bold('  Step 3 of 3: Telegram'))
   console.log()
   console.log(chalk.dim('  Open Telegram and message: ') + chalk.cyan('@agentreadybot'))
   console.log()

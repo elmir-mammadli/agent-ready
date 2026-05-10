@@ -10,7 +10,7 @@ switch (command) {
     break
   default:
     console.log(`
-  agent-ready — wire an AI coding agent into any repo in 5 minutes
+  agent-ready: wire an AI coding agent into any repo in 5 minutes
 
   Usage:
     npx agent-ready init    Set up the agent in your current repo

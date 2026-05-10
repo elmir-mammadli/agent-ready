@@ -3,7 +3,7 @@ import chalk from 'chalk'
 export async function welcome() {
   console.log()
   console.log(
-    chalk.bold('  agent-ready') + chalk.dim(' — AI coding agent for your repo'),
+    chalk.bold('  agent-ready') + chalk.dim(': AI coding agent for your repo'),
   )
   console.log()
   console.log(

@@ -1,6 +1,6 @@
 {
-  "name": "agent-ready",
-  "version": "0.1.0",
+  "name": "@elmiristic/agent-ready",
+  "version": "0.1.1",
   "description": "Wire a Trello + Claude AI + GitHub Actions coding agent into any repo in 5 minutes.",
   "type": "module",
   "bin": {

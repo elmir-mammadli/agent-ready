@@ -1,5 +1,5 @@
 export function doneWorkflowTemplate() {
-  return `name: agent-ready — mark done
+  return `name: agent-ready: mark done
 
 on:
   pull_request:

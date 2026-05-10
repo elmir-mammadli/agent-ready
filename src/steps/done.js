@@ -16,7 +16,7 @@ export async function done() {
   )
   console.log(chalk.dim('  3. Claude reads the task, edits the code, opens a PR'))
   console.log(chalk.dim('  4. You get a Telegram message with the PR link'))
-  console.log(chalk.dim('  5. Review and merge — nothing touches main without you'))
+  console.log(chalk.dim('  5. Review and merge. Nothing touches main without you'))
   console.log()
   console.log(chalk.dim('  Commit the generated files and push to get started:'))
   console.log()

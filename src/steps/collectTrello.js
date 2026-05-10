@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { input, password, confirm } from '@inquirer/prompts'
 
 export async function collectTrello() {
-  console.log(chalk.bold('  Step 1 of 3 — Trello'))
+  console.log(chalk.bold('  Step 1 of 3: Trello'))
   console.log()
   console.log(
     chalk.dim('  1. Go to: ') +

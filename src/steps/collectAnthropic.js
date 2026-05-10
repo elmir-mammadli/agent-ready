@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { password } from '@inquirer/prompts'
 
 export async function collectAnthropic() {
-  console.log(chalk.bold('  Step 2 of 3 — Anthropic'))
+  console.log(chalk.bold('  Step 2 of 3: Anthropic'))
   console.log()
   console.log(
     chalk.dim('  1. Go to: ') + chalk.cyan('https://console.anthropic.com/settings/keys'),

@@ -9,7 +9,7 @@ export async function setGithubSecrets(secrets) {
 
   const useGhCli = await confirm({
     message:
-      '  Set GitHub secrets automatically? (requires GitHub CLI — gh.io/cli)',
+      '  Set GitHub secrets automatically? (requires GitHub CLI: gh.io/cli)',
     default: true,
   })
 
