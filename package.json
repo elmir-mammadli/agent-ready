@@ -1,0 +1,36 @@
+{
+  "name": "agent-ready",
+  "version": "0.1.0",
+  "description": "Wire a Trello + Claude AI + GitHub Actions coding agent into any repo in 5 minutes.",
+  "type": "module",
+  "bin": {
+    "agent-ready": "./bin/agent-ready.js"
+  },
+  "scripts": {
+    "dev": "node bin/agent-ready.js init"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "trello",
+    "github-actions",
+    "claude",
+    "anthropic",
+    "automation",
+    "cli",
+    "telegram",
+    "coding-agent"
+  ],
+  "author": "Amazesofts",
+  "license": "MIT",
+  "dependencies": {
+    "@inquirer/prompts": "^7.5.0",
+    "chalk": "^5.4.1",
+    "execa": "^9.5.2",
+    "fs-extra": "^11.3.0",
+    "ora": "^8.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

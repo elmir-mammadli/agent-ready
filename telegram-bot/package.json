@@ -1,0 +1,13 @@
+{
+  "name": "agent-ready-telegram-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "itty-router": "^5.0.18"
+  }
+}
