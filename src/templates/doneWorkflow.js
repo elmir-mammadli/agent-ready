@@ -24,7 +24,7 @@ jobs:
             "https://api.trello.com/1/cards/\${CARD_ID}?idList=\${TRELLO_DONE_LIST_ID}&key=\${TRELLO_API_KEY}&token=\${TRELLO_TOKEN}"
 
           MESSAGE="Merged: \${PR_TITLE}%0ACard moved to Done."
-          curl -s -X POST "https://api.agent-ready.dev/telegram/send" \\
+          curl -s -X POST "https://telegram-bot-ruby-tau.vercel.app/api/send" \\
             -H "Content-Type: application/json" \\
             -d "{\\"chat_id\\":\\"\${TELEGRAM_CHAT_ID}\\",\\"text\\":\\"\${MESSAGE}\\"}"
         env:

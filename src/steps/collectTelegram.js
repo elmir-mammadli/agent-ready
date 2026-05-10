@@ -4,7 +4,7 @@ import { input } from '@inquirer/prompts'
 export async function collectTelegram() {
   console.log(chalk.bold('  Step 3 of 3 — Telegram'))
   console.log()
-  console.log(chalk.dim('  Open Telegram and message: ') + chalk.cyan('@agent_ready_bot'))
+  console.log(chalk.dim('  Open Telegram and message: ') + chalk.cyan('@agentreadybot'))
   console.log()
   console.log(chalk.dim('  Send: ') + chalk.white('/start'))
   console.log()

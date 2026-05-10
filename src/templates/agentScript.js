@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs'
 import { dirname } from 'path'
 import Anthropic from '@anthropic-ai/sdk'
 
-const AGENT_READY_API = 'https://api.agent-ready.dev'
+const AGENT_READY_API = 'https://telegram-bot-ruby-tau.vercel.app'
 
 const {
   TRELLO_API_KEY,
