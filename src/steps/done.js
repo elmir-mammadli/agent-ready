@@ -23,7 +23,7 @@ export async function done() {
   console.log('  ' + chalk.cyan('git add .github && git commit -m "feat: add agent-ready" && git push'))
   console.log()
   console.log(
-    chalk.dim('  Docs: ') + chalk.cyan('https://github.com/amazesofts/agent-ready'),
+    chalk.dim('  Docs: ') + chalk.cyan('https://github.com/elmir-mammadli/agent-ready'),
   )
   console.log()
 }
