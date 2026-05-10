@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import { welcome } from './steps/welcome.js'
+import { selectProvider } from './steps/selectProvider.js'
 import { collectTrello } from './steps/collectTrello.js'
 import { collectAnthropic } from './steps/collectAnthropic.js'
 import { collectTelegram } from './steps/collectTelegram.js'
@@ -10,10 +11,11 @@ import { done } from './steps/done.js'
 export async function init() {
   try {
     await welcome()
-    const trello = await collectTrello()
+    const provider = await selectProvider()
+    const board = await collectTrello()
     const anthropic = await collectAnthropic()
     const telegram = await collectTelegram()
-    const secrets = { ...trello, ...anthropic, ...telegram }
+    const secrets = { ...board, ...anthropic, ...telegram }
     await setGithubSecrets(secrets)
     await scaffold()
     await done()
