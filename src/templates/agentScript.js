@@ -58,8 +58,8 @@ function parseClaudeJson(msg) {
     throw new Error('Claude response was cut off. Narrow the task scope in the card description.')
   }
   const raw = msg.content[0].text.trim()
-  const match = raw.match(/\\{[\\s\\S]*\\}/)
-  if (!match) throw new Error('No JSON object found in Claude response.')
+  const match = raw.match(/(\\{[\\s\\S]*\\}|\\[[\\s\\S]*\\])/)
+  if (!match) throw new Error(\`No JSON found in Claude response: \${raw.slice(0, 200)}\`)
   return JSON.parse(match[0])
 }
 
