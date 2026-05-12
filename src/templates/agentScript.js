@@ -144,31 +144,11 @@ async function createPR(branch, card, summary) {
   return (await res.json()).html_url
 }
 
-async function main() {
-  console.log('Fetching Trello cards...')
-  const allCards = await trello(\`/lists/\${TRELLO_LIST_ID}/cards\`)
-  const cards = allCards.filter(c => c.idLabels.includes(TRELLO_AGENT_LABEL_ID))
-
-  console.log(\`\${allCards.length} total, \${cards.length} agent-ready.\`)
-
-  if (cards.length === 0) {
-    await sendTelegram('agent-ready: No agent-ready tasks found. All clear.')
-    return
-  }
-
-  const card = cards[0]
-  console.log(\`Processing: "\${card.name}"\`)
+async function processCard(card, fileTree) {
+  console.log(\`\\nProcessing: "\${card.name}"\`)
 
   await trello(\`/cards/\${card.id}?idList=\${TRELLO_DOING_LIST_ID}\`, 'PUT')
-  await sendTelegram(\`agent-ready: Starting task\\n\${card.name}\\n\\nWorking on it...\`)
 
-  execSync('git config user.name "agent-ready"')
-  execSync('git config user.email "agent@agent-ready.dev"')
-  execSync(\`git remote set-url origin https://x-access-token:\${GITHUB_TOKEN}@github.com/\${GITHUB_REPOSITORY}.git\`)
-
-  const fileTree = getFileTree()
-
-  console.log('Identifying relevant files...')
   const filePaths = await getRelevantFiles(card, fileTree)
   console.log('Files:', filePaths)
 
@@ -185,7 +165,6 @@ async function main() {
     }
   }
 
-  console.log('Generating changes...')
   const { changes, summary, branchName } = await makeChanges(card, fileContents)
   console.log('Summary:', summary)
 
@@ -205,20 +184,64 @@ async function main() {
   const prUrl = await createPR(branch, card, summary)
   console.log('PR:', prUrl)
 
-  await sendTelegram(
-    \`agent-ready: Task complete\\n\\n\` +
-    \`Task: \${card.name}\\n\` +
-    \`Done: \${summary}\\n\` +
-    \`PR: \${prUrl}\\n\\n\` +
-    \`Review and merge when ready.\`
-  )
+  return { summary, prUrl }
+}
 
+async function main() {
+  console.log('Fetching Trello cards...')
+  const allCards = await trello(\`/lists/\${TRELLO_LIST_ID}/cards\`)
+  const cards = allCards.filter(c => c.idLabels.includes(TRELLO_AGENT_LABEL_ID))
+
+  console.log(\`\${allCards.length} total, \${cards.length} agent-ready.\`)
+
+  if (cards.length === 0) {
+    await sendTelegram('agent-ready: No tasks found. All clear.')
+    return
+  }
+
+  execSync('git config user.name "agent-ready"')
+  execSync('git config user.email "agent@agent-ready.dev"')
+  execSync(\`git remote set-url origin https://x-access-token:\${GITHUB_TOKEN}@github.com/\${GITHUB_REPOSITORY}.git\`)
+
+  const fileTree = getFileTree()
+
+  await sendTelegram(\`agent-ready: Starting \${cards.length} task\${cards.length > 1 ? 's' : ''}...\\n\${cards.map((c, i) => \`\${i + 1}. \${c.name}\`).join('\\n')}\`)
+
+  const results = []
+
+  for (const card of cards) {
+    try {
+      const { summary, prUrl } = await processCard(card, fileTree)
+      results.push({ card, summary, prUrl, ok: true })
+    } catch (err) {
+      console.error(\`Failed "\${card.name}": \${err.message}\`)
+      results.push({ card, error: err.message, ok: false })
+      await trello(\`/cards/\${card.id}?idList=\${TRELLO_LIST_ID}\`, 'PUT').catch(() => {})
+    }
+    execSync('git checkout main')
+  }
+
+  const succeeded = results.filter(r => r.ok)
+  const failed = results.filter(r => !r.ok)
+
+  let msg = \`agent-ready: Run complete\\n\`
+  msg += \`\${succeeded.length} done, \${failed.length} failed\\n\`
+
+  if (succeeded.length > 0) {
+    msg += \`\\nCompleted:\\n\` + succeeded.map(r => \`- \${r.card.name}\\n  \${r.prUrl}\`).join('\\n')
+  }
+
+  if (failed.length > 0) {
+    msg += \`\\n\\nFailed (moved back to To Do):\\n\` + failed.map(r => \`- \${r.card.name}: \${r.error}\`).join('\\n')
+  }
+
+  await sendTelegram(msg)
   console.log('Done.')
 }
 
 main().catch(async err => {
   console.error('Fatal:', err.message)
-  await sendTelegram(\`agent-ready: Error\\n\${err.message}\`).catch(() => {})
+  await sendTelegram(\`agent-ready: Fatal error\\n\${err.message}\`).catch(() => {})
   process.exit(1)
 })
 `
