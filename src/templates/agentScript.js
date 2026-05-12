@@ -53,12 +53,12 @@ async function sendTelegram(text) {
   })
 }
 
-function parseClaudeJson(msg) {
+function parseClaudeJson(msg, prefilled = false) {
   if (msg.stop_reason === 'max_tokens') {
     throw new Error('Claude response was cut off. Narrow the task scope in the card description.')
   }
   const raw = msg.content[0].text.trim()
-  const json = raw.replace(/^\`\`\`(?:json)?\\s*/i, '').replace(/\\s*\`\`\`$/, '')
+  const json = prefilled ? '{' + raw : raw.replace(/^\`\`\`(?:json)?\\s*/i, '').replace(/\\s*\`\`\`$/, '')
   return JSON.parse(json)
 }
 
@@ -98,9 +98,10 @@ async function makeChanges(card, fileContents) {
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 16000,
-    messages: [{
-      role: 'user',
-      content: \`You are a coding agent.
+    messages: [
+      {
+        role: 'user',
+        content: \`You are a coding agent. Respond with JSON only.
 
 Task: \${card.name}
 Description: \${card.desc || 'No description.'}
@@ -108,7 +109,7 @@ Description: \${card.desc || 'No description.'}
 File contents:
 \${filesText}
 
-Return ONLY valid JSON — no markdown, no explanation:
+Respond with this exact JSON structure:
 {
   "changes": [{"path": "src/...", "content": "...complete file content..."}],
   "summary": "One sentence describing the change",
@@ -118,10 +119,16 @@ Return ONLY valid JSON — no markdown, no explanation:
 Rules:
 - Only include files you actually modified
 - Return complete file content, not a diff
-- branchName: lowercase, hyphens only, max 40 chars\`,
-    }],
+- branchName: lowercase, hyphens only, max 40 chars
+- No explanation, no markdown, just the JSON object\`,
+      },
+      {
+        role: 'assistant',
+        content: '{',
+      },
+    ],
   })
-  return parseClaudeJson(msg)
+  return parseClaudeJson(msg, true)
 }
 
 async function createPR(branch, card, summary) {
