@@ -2,7 +2,7 @@
 
 Wire an AI coding agent into any GitHub repo in 5 minutes.
 
-Tag a Trello card **agent-ready** and Claude reads the task, writes the code, opens a PR, and pings you on Telegram. Runs on your schedule, in your timezone.
+Tag a Trello card **agent-ready** and Claude reads the task, writes the code, opens a PR, and notifies you on Telegram. Runs on your schedule, in your timezone. Nothing touches `main` without your review.
 
 ## Quick start
 
@@ -10,18 +10,16 @@ Tag a Trello card **agent-ready** and Claude reads the task, writes the code, op
 npx @elmiristic/agent-ready init
 ```
 
-That's it. The wizard handles everything.
-
 ## What the wizard sets up
 
-1. **Board** - connect your Trello board and pick the right lists
+1. **Board** - connect your Trello board and select your To Do, Doing, and Done lists
 2. **Anthropic** - add your Claude API key
-3. **Telegram** - message [@agentreadybot](https://t.me/agentreadybot) and paste your chat ID. No bot setup needed.
-4. **Schedule** - pick your timezone and the times you want the agent to run each day
-5. **GitHub secrets** - set automatically via GitHub CLI, or manually if you prefer
-6. **Workflow files** - written directly into your repo under `.github/`
+3. **Telegram** - message [@agentreadybot](https://t.me/agentreadybot) and send `/start` to get your chat ID. No bot setup required.
+4. **Schedule** - pick your timezone and up to two daily run times. The wizard converts them to UTC and writes the cron expressions automatically.
+5. **GitHub secrets** - set automatically via GitHub CLI, or paste them manually in repo settings
+6. **Workflow files** - written into `.github/workflows/` and `.github/scripts/` in your current directory
 
-Then run:
+Then commit and push to activate:
 
 ```bash
 git add .github && git commit -m "feat: add agent-ready" && git push
@@ -30,25 +28,25 @@ git add .github && git commit -m "feat: add agent-ready" && git push
 ## How it works
 
 1. Add the `agent-ready` label to a Trello card in your To Do list
-2. The agent runs at the times you set during setup
-3. Claude reads the card title and description, finds the relevant files, writes the code
-4. A PR is opened with a summary of the change
+2. The agent runs at the times you configured, or trigger it manually from the GitHub Actions tab
+3. Claude identifies the relevant files, reads them, and writes the changes
+4. A PR is opened on a new `agent/` branch with a one-line summary
 5. You get a Telegram message with the PR link
-6. Merge the PR and the card moves to Done automatically
+6. Merge the PR and the Trello card moves to Done automatically
 
-Nothing touches `main` without your review.
+If a task fails, the card moves back to To Do and the error is included in the Telegram report. All other tasks in the same run continue normally.
 
-## Schedule
+## Multiple tasks per run
 
-During setup you pick your timezone and up to two daily run times. The wizard converts them to UTC and writes the correct cron expressions into your workflow file. You can also trigger a run manually anytime from the GitHub Actions tab.
+The agent processes all cards labeled `agent-ready` in a single run. Each card gets its own branch and PR. The final Telegram message lists what completed and what failed.
 
 ## Requirements
 
 - Node.js 18+
-- A GitHub repository
+- A GitHub repository with Actions enabled
 - A Trello account
-- An Anthropic API key (get one at [console.anthropic.com](https://console.anthropic.com))
-- GitHub CLI (`gh`) for automatic secret setup — optional, secrets can be added manually
+- An Anthropic API key — get one at [console.anthropic.com](https://console.anthropic.com)
+- GitHub CLI (`gh`) for automatic secret setup — optional, can be done manually in repo settings
 
 ## Supported board tools
 
