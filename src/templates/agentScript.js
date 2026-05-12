@@ -178,7 +178,7 @@ async function processCard(card, fileTree) {
   }
 
   execSync('git add -A')
-  execSync(\`git commit -m "agent: \${summary}"\`)
+  execSync(\`git commit -m "agent: \${summary} [skip vercel]"\`)
   execSync(\`git push origin \${branch}\`)
 
   const prUrl = await createPR(branch, card, summary)
