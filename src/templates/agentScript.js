@@ -53,13 +53,14 @@ async function sendTelegram(text) {
   })
 }
 
-function parseClaudeJson(msg, prefilled = false) {
+function parseClaudeJson(msg) {
   if (msg.stop_reason === 'max_tokens') {
     throw new Error('Claude response was cut off. Narrow the task scope in the card description.')
   }
   const raw = msg.content[0].text.trim()
-  const json = prefilled ? '{' + raw : raw.replace(/^\`\`\`(?:json)?\\s*/i, '').replace(/\\s*\`\`\`$/, '')
-  return JSON.parse(json)
+  const match = raw.match(/\\{[\\s\\S]*\\}/)
+  if (!match) throw new Error('No JSON object found in Claude response.')
+  return JSON.parse(match[0])
 }
 
 function getFileTree() {
@@ -122,13 +123,9 @@ Rules:
 - branchName: lowercase, hyphens only, max 40 chars
 - No explanation, no markdown, just the JSON object\`,
       },
-      {
-        role: 'assistant',
-        content: '{',
-      },
     ],
   })
-  return parseClaudeJson(msg, true)
+  return parseClaudeJson(msg)
 }
 
 async function createPR(branch, card, summary) {
