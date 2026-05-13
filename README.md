@@ -1,3 +1,5 @@
+![agent-ready](https://raw.githubusercontent.com/elmir-mammadli/agent-ready/main/banner.png)
+
 # agent-ready
 
 Wire an AI coding agent into any GitHub repo in 5 minutes.
