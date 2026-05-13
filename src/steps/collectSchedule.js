@@ -1,29 +1,33 @@
 import chalk from 'chalk'
-import { select, confirm, input } from '@inquirer/prompts'
+import { select, input } from '@inquirer/prompts'
 
 const TIMEZONES = [
-  { name: 'UTC+0  — London, Lisbon', value: 0 },
-  { name: 'UTC-5  — New York, Toronto', value: -5 },
-  { name: 'UTC-6  — Chicago, Mexico City', value: -6 },
-  { name: 'UTC-7  — Denver, Phoenix', value: -7 },
-  { name: 'UTC-8  — Los Angeles, Vancouver', value: -8 },
-  { name: 'UTC+1  — Paris, Berlin, Rome', value: 1 },
-  { name: 'UTC+2  — Cairo, Kyiv, Helsinki', value: 2 },
-  { name: 'UTC+3  — Istanbul, Moscow, Riyadh', value: 3 },
-  { name: 'UTC+4  — Dubai, Baku', value: 4 },
-  { name: 'UTC+5  — Karachi, Tashkent', value: 5 },
-  { name: 'UTC+5:30 — Mumbai, Kolkata', value: 5.5 },
-  { name: 'UTC+6  — Dhaka, Almaty', value: 6 },
-  { name: 'UTC+7  — Bangkok, Jakarta', value: 7 },
-  { name: 'UTC+8  — Singapore, Beijing, Perth', value: 8 },
-  { name: 'UTC+9  — Tokyo, Seoul', value: 9 },
-  { name: 'UTC+10 — Sydney, Melbourne', value: 10 },
-  { name: 'UTC+12 — Auckland', value: 12 },
+  { name: 'UTC+0  : London, Lisbon', value: 0 },
+  { name: 'UTC-5  : New York, Toronto', value: -5 },
+  { name: 'UTC-6  : Chicago, Mexico City', value: -6 },
+  { name: 'UTC-7  : Denver, Phoenix', value: -7 },
+  { name: 'UTC-8  : Los Angeles, Vancouver', value: -8 },
+  { name: 'UTC+1  : Paris, Berlin, Rome', value: 1 },
+  { name: 'UTC+2  : Cairo, Kyiv, Helsinki', value: 2 },
+  { name: 'UTC+3  : Istanbul, Moscow, Riyadh', value: 3 },
+  { name: 'UTC+4  : Dubai, Baku', value: 4 },
+  { name: 'UTC+5  : Karachi, Tashkent', value: 5 },
+  { name: 'UTC+5:30 : Mumbai, Kolkata', value: 5.5 },
+  { name: 'UTC+6  : Dhaka, Almaty', value: 6 },
+  { name: 'UTC+7  : Bangkok, Jakarta', value: 7 },
+  { name: 'UTC+8  : Singapore, Beijing, Perth', value: 8 },
+  { name: 'UTC+9  : Tokyo, Seoul', value: 9 },
+  { name: 'UTC+10 : Sydney, Melbourne', value: 10 },
+  { name: 'UTC+12 : Auckland', value: 12 },
 ]
 
 function toUtcHour(localHour, offsetHours) {
   const utc = ((localHour - offsetHours) % 24 + 24) % 24
   return Math.round(utc)
+}
+
+function fmt(h) {
+  return `${h % 12 === 0 ? 12 : h % 12}${h < 12 ? 'am' : 'pm'}`
 }
 
 async function askHour(label) {
@@ -52,33 +56,31 @@ export async function collectSchedule() {
 
   console.log()
 
-  const hour1 = await askHour('First run time')
-  const utc1 = toUtcHour(hour1, offset)
-
-  console.log()
-
-  const addSecond = await confirm({
-    message: '  Add a second daily run?',
-    default: true,
+  const count = await select({
+    message: '  How many times per day should the agent run?',
+    choices: [
+      { name: '1 time', value: 1 },
+      { name: '2 times', value: 2 },
+      { name: '3 times', value: 3 },
+      { name: '4 times', value: 4 },
+    ],
   })
 
   console.log()
 
-  const crons = [`0 ${utc1} * * *`]
+  const ordinals = ['First', 'Second', 'Third', 'Fourth']
+  const hours = []
 
-  if (addSecond) {
-    const hour2 = await askHour('Second run time')
-    const utc2 = toUtcHour(hour2, offset)
-    crons.push(`0 ${utc2} * * *`)
+  for (let i = 0; i < count; i++) {
+    const hour = await askHour(`${ordinals[i]} run time`)
+    hours.push(hour)
     console.log()
   }
 
-  const fmt = (h) => `${h % 12 === 0 ? 12 : h % 12}${h < 12 ? 'am' : 'pm'}`
-  const times = addSecond
-    ? `${fmt(hour1)} and ${fmt(Number(crons[1].split(' ')[1]) + offset)}`
-    : fmt(hour1)
+  const crons = hours.map(h => `0 ${toUtcHour(h, offset)} * * *`)
 
-  console.log(chalk.dim(`  Agent will run at ${times} your time.`))
+  const timeList = hours.map(fmt).join(', ')
+  console.log(chalk.dim(`  Agent will run at ${timeList} your time.`))
   console.log()
 
   return { crons }
