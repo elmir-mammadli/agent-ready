@@ -17,7 +17,7 @@ npx @elmiristic/agent-ready init
 1. **Board** - connect your Trello board and select your To Do, Doing, and Done lists
 2. **Anthropic** - add your Claude API key
 3. **Telegram** - message [@agentreadybot](https://t.me/agentreadybot) and send `/start` to get your chat ID. No bot setup required.
-4. **Schedule** - pick your timezone and up to two daily run times. The wizard converts them to UTC and writes the cron expressions automatically.
+4. **Schedule** - pick your timezone and how many times per day the agent should run (1 to 4). Set each run time individually. The wizard converts them to UTC and writes the cron expressions automatically.
 5. **GitHub secrets** - set automatically via GitHub CLI, or paste them manually in repo settings
 6. **Workflow files** - written into `.github/workflows/` and `.github/scripts/` in your current directory
 
@@ -37,6 +37,10 @@ git add .github && git commit -m "feat: add agent-ready" && git push
 6. Merge the PR and the Trello card moves to Done automatically
 
 If a task fails, the card moves back to To Do and the error is included in the Telegram report. All other tasks in the same run continue normally.
+
+## Schedule
+
+Pick your timezone and how many times per day the agent should run — 1, 2, 3, or 4. You set each run time individually. The wizard converts everything to UTC and writes the cron expressions into your workflow file. You can also trigger a run manually anytime from the GitHub Actions tab.
 
 ## Multiple tasks per run
 
