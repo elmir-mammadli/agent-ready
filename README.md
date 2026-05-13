@@ -1,4 +1,4 @@
-![agent-ready](https://raw.githubusercontent.com/elmir-mammadli/agent-ready/main/banner.png)
+![agent-ready](https://raw.githubusercontent.com/elmir-mammadli/agent-ready/main/banner.svg)
 
 # agent-ready
 
