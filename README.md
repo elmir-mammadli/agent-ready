@@ -40,7 +40,7 @@ If a task fails, the card moves back to To Do and the error is included in the T
 
 ## Schedule
 
-Pick your timezone and how many times per day the agent should run — 1, 2, 3, or 4. You set each run time individually. The wizard converts everything to UTC and writes the cron expressions into your workflow file. You can also trigger a run manually anytime from the GitHub Actions tab.
+Pick your timezone and how many times per day the agent should run: 1, 2, 3, or 4. You set each run time individually. The wizard converts everything to UTC and writes the cron expressions into your workflow file. You can also trigger a run manually anytime from the GitHub Actions tab.
 
 ## Multiple tasks per run
 
@@ -51,8 +51,8 @@ The agent processes all cards labeled `agent-ready` in a single run. Each card g
 - Node.js 18+
 - A GitHub repository with Actions enabled
 - A Trello account
-- An Anthropic API key — get one at [console.anthropic.com](https://console.anthropic.com)
-- GitHub CLI (`gh`) for automatic secret setup — optional, can be done manually in repo settings
+- An Anthropic API key, get one at [console.anthropic.com](https://console.anthropic.com)
+- GitHub CLI (`gh`) for automatic secret setup: optional, can be done manually in repo settings
 
 ## Supported board tools
 
