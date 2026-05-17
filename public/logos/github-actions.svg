@@ -1,0 +1,6 @@
+<svg width="196" height="40" viewBox="0 0 196 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="194" height="38" rx="19" fill="#0D0D0D" stroke="rgba(255,255,255,0.1)"/>
+  <path d="M18 27L22.5 12.5H29L24.6 27H18Z" fill="#2088FF"/>
+  <path d="M27 20.5L30.8 16.7L34.6 20.5L30.8 24.3L27 20.5Z" fill="#8A5CFF"/>
+  <text x="48" y="25" fill="white" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600">GitHub Actions</text>
+</svg>

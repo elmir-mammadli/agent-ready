@@ -1,0 +1,6 @@
+<svg width="182" height="40" viewBox="0 0 182 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="180" height="38" rx="19" fill="#0D0D0D" stroke="rgba(255,255,255,0.1)"/>
+  <circle cx="24" cy="20" r="10" fill="#D4B594"/>
+  <path d="M24 12L29.5 27H27L25.9 23.8H22L20.9 27H18.5L24 12ZM22.8 21.8H25.2L24 18.1L22.8 21.8Z" fill="#0A0A0A"/>
+  <text x="46" y="25" fill="white" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600">Anthropic</text>
+</svg>
