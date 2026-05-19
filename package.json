@@ -7,7 +7,12 @@
     "agent-ready": "./bin/agent-ready.js"
   },
   "scripts": {
-    "dev": "node bin/agent-ready.js init"
+    "dev": "node bin/agent-ready.js init",
+    "dev:cli": "node bin/agent-ready.js init",
+    "dev:web": "nuxt dev",
+    "build:web": "nuxt build",
+    "generate": "nuxt generate",
+    "preview:web": "nuxt preview"
   },
   "keywords": [
     "ai",
@@ -23,12 +28,22 @@
   ],
   "author": "Amazesofts",
   "license": "MIT",
+  "homepage": "https://agent.elmir.dev",
   "dependencies": {
     "@inquirer/prompts": "^7.5.0",
     "chalk": "^5.4.1",
     "execa": "^9.5.2",
     "fs-extra": "^11.3.0",
     "ora": "^8.1.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@vueuse/core": "^13.1.0",
+    "@vueuse/motion": "^3.0.3",
+    "lucide-vue-next": "^0.511.0",
+    "nuxt": "^3.21.5",
+    "shiki": "^3.4.2"
   },
   "engines": {
     "node": ">=18"
